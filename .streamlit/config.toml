@@ -1,0 +1,6 @@
+[theme]
+# Brand blue — recolors interactive accents (multiselect tags, slider
+# handle/track, focus rings) to match the title and KPI score cards,
+# replacing Streamlit's default red (#FF4B4B).
+primaryColor = "#2E3EED"
+font = "serif"
