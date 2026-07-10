@@ -747,7 +747,7 @@ with col1:
 
     chart_header("Risk Score Distribution")
 
-    fig4, ax4 = plt.subplots(figsize=(4, 3))
+    fig4, ax4 = plt.subplots(figsize=(6, 4.5))
 
 
     sns.countplot(
@@ -784,7 +784,7 @@ with col1:
         label.set_fontname(CHART_FONT)
 
 
-    st.pyplot(fig4, width="content")
+    st.pyplot(fig4, width="stretch")
     plt.close(fig4)
     chart_caption("Most members combine zero or one risk factor.")
 
@@ -807,7 +807,7 @@ with col2:
     tier_summary.columns = ["risk_tier", "members"]
 
 
-    fig5, ax5 = plt.subplots(figsize=(4, 3))
+    fig5, ax5 = plt.subplots(figsize=(6, 4.5))
 
 
 
@@ -850,7 +850,7 @@ with col2:
         label.set_fontname(CHART_FONT)
 
 
-    st.pyplot(fig5, width="content")
+    st.pyplot(fig5, width="stretch")
     plt.close(fig5)
     chart_caption("Most members sit in the Low tier; High-risk is a small but disproportionately costly minority.")
 
@@ -863,7 +863,7 @@ with col2:
 with col3:
     chart_header("Cost Spread by Risk Tier")
 
-    fig6, ax6 = plt.subplots(figsize=(4, 3))
+    fig6, ax6 = plt.subplots(figsize=(6, 4.5))
 
     sns.boxplot(
         data=df,
@@ -888,7 +888,7 @@ with col3:
     for label in ax6.get_yticklabels():
         label.set_fontname(CHART_FONT)
 
-    st.pyplot(fig6, width="content")
+    st.pyplot(fig6, width="stretch")
     plt.close(fig6)
     chart_caption("Typical cost climbs sharply by tier; the Low tier is the most spread out, while the small High tier is uniformly expensive.")
 
