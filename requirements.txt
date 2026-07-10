@@ -1,4 +1,6 @@
-streamlit>=1.40.0
+# >=1.50: st.pyplot width="stretch"/"content" (replaces the deprecated
+# use_container_width, which will be removed in a future Streamlit release)
+streamlit>=1.50.0
 pandas>=2.2.0
 numpy>=1.27.0
 matplotlib>=3.9.0

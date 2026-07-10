@@ -93,7 +93,7 @@ def chart_caption(text):
         font-family:{DESIGN['font']};
         font-size:10px;
         color:#666666;
-        height:40px;
+        min-height:40px;
         line-height:1.3;
         text-align:center;
         margin-top:-8px;
@@ -232,6 +232,13 @@ section[data-testid="stSidebar"] {
 
     h3 {
         font-size: 20px !important;
+        font-weight: bold !important;
+    }
+
+    /* Sub-subsection ("#### Cost drivers in detail"): without a rule it
+       renders at the same size as h3, flattening the heading hierarchy. */
+    h4 {
+        font-size: 18px !important;
         font-weight: bold !important;
     }
 
@@ -559,7 +566,7 @@ if usable and df["charges"].std() > 0:
         axd.tick_params(labelsize=10)
         for lab in axd.get_xticklabels() + axd.get_yticklabels():
             lab.set_fontname(CHART_FONT)
-        st.pyplot(figd, use_container_width=True)
+        st.pyplot(figd, width="stretch")
         plt.close(figd)
     with dcol2:
         st.markdown(
@@ -611,7 +618,7 @@ with col1:
     for label in ax1.get_yticklabels():
         label.set_fontname(CHART_FONT)
 
-    st.pyplot(fig1, use_container_width=False)
+    st.pyplot(fig1, width="content")
     plt.close(fig1)
     chart_caption("Costs are bimodal: a low-cost cluster and a higher second hump made up almost entirely of smokers.")
 
@@ -639,11 +646,12 @@ with col2:
     ax2b.set_title("Cost Spread by Smoking Status", fontsize=13, fontname=CHART_FONT)
     ax2b.set_xlabel("Smoking Status", fontsize=11, fontname=CHART_FONT)
     ax2b.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
+    ax2b.set_xticks([0, 1])
     ax2b.set_xticklabels(["Non-Smoker", "Smoker"], fontname=CHART_FONT)
     ax2b.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
     ax2b.tick_params(labelsize=10)
 
-    st.pyplot(fig2b, use_container_width=False)
+    st.pyplot(fig2b, width="content")
     plt.close(fig2b)
     chart_caption("Smokers show both higher and more variable costs.")
 
@@ -673,13 +681,14 @@ with col3:
     ax2.set_xlabel("Smoking Status", fontsize=11, fontname=CHART_FONT)
     ax2.set_ylabel("Average Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
+    ax2.set_xticks([0, 1])
     ax2.set_xticklabels(["Non-Smoker", "Smoker"], fontname=CHART_FONT)
     ax2.tick_params(labelsize=10)
 
     for label in ax2.get_yticklabels():
         label.set_fontname(CHART_FONT)
 
-    st.pyplot(fig2, use_container_width=False)
+    st.pyplot(fig2, width="content")
     plt.close(fig2)
     chart_caption("The smoker/non-smoker gap dwarfs every other factor — it's the portfolio's main cost lever.")
 
@@ -715,7 +724,7 @@ with col4:
     for label in ax3.get_yticklabels():
         label.set_fontname(CHART_FONT)
 
-    st.pyplot(fig3, use_container_width=False)
+    st.pyplot(fig3, width="content")
     plt.close(fig3)
     chart_caption("Cost rises gently with age, but splits into three bands — smokers (red) form the two costly upper bands.")
 
@@ -784,7 +793,7 @@ with col1:
         label.set_fontname(CHART_FONT)
 
 
-    st.pyplot(fig4, use_container_width=False)
+    st.pyplot(fig4, width="content")
     plt.close(fig4)
     chart_caption("Most members combine zero or one risk factor.")
 
@@ -855,7 +864,7 @@ with col2:
         label.set_fontname(CHART_FONT)
 
 
-    st.pyplot(fig5, use_container_width=False)
+    st.pyplot(fig5, width="content")
     plt.close(fig5)
     chart_caption("Most members sit in the Low tier; High-risk is a small but disproportionately costly minority.")
 
@@ -894,7 +903,7 @@ with col3:
     for label in ax6.get_yticklabels():
         label.set_fontname(CHART_FONT)
 
-    st.pyplot(fig6, use_container_width=False)
+    st.pyplot(fig6, width="content")
     plt.close(fig6)
     chart_caption("Typical cost climbs sharply by tier; the Low tier is the most spread out, while the small High tier is uniformly expensive.")
 
@@ -1069,7 +1078,7 @@ with col1:
     )
 
 
-    st.pyplot(fig7, use_container_width=False)
+    st.pyplot(fig7, width="content")
     plt.close(fig7)
     chart_caption("Premium = average cost plus a per-tier markup (higher tiers carry a larger margin).")
 
@@ -1126,7 +1135,7 @@ with col2:
             fontname=CHART_FONT
         )
 
-    st.pyplot(fig8, use_container_width=False)
+    st.pyplot(fig8, width="content")
     plt.close(fig8)
     chart_caption("Total profit reflects both margin per member and tier size.")
 
