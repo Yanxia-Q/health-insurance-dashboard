@@ -602,7 +602,6 @@ with col1:
         if not vals.empty:
             ax1.hist(vals, bins=bins, color=color, edgecolor="white", alpha=0.75, label=lbl)
 
-    ax1.set_title("Medical Cost Distribution", fontsize=13, fontname=CHART_FONT)
     ax1.set_xlabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax1.set_ylabel("Number of Members", fontsize=11, fontname=CHART_FONT)
     # Compact $k labels — full amounts ($10,000, $20,000, …) are wider than
@@ -643,7 +642,6 @@ with col2:
         ax=ax2b
     )
 
-    ax2b.set_title("Cost Spread by Smoking Status", fontsize=13, fontname=CHART_FONT)
     ax2b.set_xlabel("Smoking Status", fontsize=11, fontname=CHART_FONT)
     ax2b.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax2b.set_xticks([0, 1])
@@ -659,7 +657,7 @@ with col2:
 # 3. SMOKING IMPACT (BAR OF AVERAGES)
 # ======================
 with col3:
-    chart_header("Smoking Impact")
+    chart_header("Average Cost: Smoker vs Non-Smoker")
 
     smoker_cost = df.groupby("smoker")["charges"].mean().reindex(["no", "yes"]).reset_index()
 
@@ -677,7 +675,6 @@ with col3:
         ax=ax2
     )
 
-    ax2.set_title("Average Cost: Smoker vs Non-Smoker", fontsize=13, fontname=CHART_FONT)
     ax2.set_xlabel("Smoking Status", fontsize=11, fontname=CHART_FONT)
     ax2.set_ylabel("Average Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
@@ -712,7 +709,6 @@ with col4:
         ax=ax3
     )
 
-    ax3.set_title("Age vs Annual Medical Cost", fontsize=13, fontname=CHART_FONT)
     ax3.set_xlabel("Age", fontsize=11, fontname=CHART_FONT)
     ax3.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax3.legend(title="Smoker", fontsize=10, title_fontsize=11)
@@ -762,11 +758,6 @@ with col1:
     )
 
 
-    ax4.set_title(
-        "Member Distribution by Risk Score",
-        fontsize=13,
-        fontname=CHART_FONT
-    )
 
 
     ax4.set_xlabel(
@@ -833,11 +824,6 @@ with col2:
     )
 
 
-    ax5.set_title(
-        "Members by Risk Tier",
-        fontsize=13,
-        fontname=CHART_FONT
-    )
 
 
     ax5.set_xlabel(
@@ -891,7 +877,6 @@ with col3:
         ax=ax6
     )
 
-    ax6.set_title("Cost Spread by Risk Tier", fontsize=13, fontname=CHART_FONT)
     ax6.set_xlabel("Risk Tier", fontsize=11, fontname=CHART_FONT)
     ax6.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax6.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
@@ -1035,11 +1020,6 @@ with col1:
     )
 
 
-    ax7.set_title(
-        "Cost vs Premium by Risk Tier",
-        fontsize=13,
-        fontname=CHART_FONT
-    )
 
 
     ax7.set_xlabel(
@@ -1104,7 +1084,6 @@ with col2:
         ax=ax8
     )
 
-    ax8.set_title("Total Profit by Risk Tier", fontsize=13, fontname=CHART_FONT)
     ax8.set_xlabel("Risk Tier", fontsize=11, fontname=CHART_FONT)
     ax8.set_ylabel("Total Profit ($)", fontsize=11, fontname=CHART_FONT)
     ax8.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
