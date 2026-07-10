@@ -1,13 +1,23 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")  # headless backend — required on Streamlit Cloud, where the
+                       # default backend can segfault inside Streamlit's threads
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 
-# Readable, on-brand defaults for every chart (Georgia, larger type than the
+# Georgia exists on macOS/Windows but not on Streamlit Cloud's Linux servers,
+# where asking for it floods the log with findfont errors. Fall back to
+# DejaVu Serif, which ships with matplotlib and is available everywhere.
+_installed_fonts = {f.name for f in font_manager.fontManager.ttflist}
+CHART_FONT = "Georgia" if "Georgia" in _installed_fonts else "DejaVu Serif"
+
+# Readable, on-brand defaults for every chart (serif, larger type than the
 # old 8–10px). Explicit sizes in each chart still win where set.
 plt.rcParams.update({
-    "font.family": "Georgia",
+    "font.family": CHART_FONT,
     "axes.titlesize": 13,
     "axes.labelsize": 11,
     "xtick.labelsize": 10,
@@ -543,11 +553,12 @@ if usable and df["charges"].std() > 0:
         chart_header("What drives cost the most? (standardized effect size)")
         figd, axd = plt.subplots(figsize=(6, 2.6))
         axd.barh(importance["driver"], importance["weight"], color=COLOR_PRIMARY, edgecolor="white")
-        axd.set_xlabel("Relative importance  ( |standardized coefficient| )", fontsize=11, fontname="Georgia")
+        axd.set_xlabel("Relative importance  ( |standardized coefficient| )", fontsize=11, fontname=CHART_FONT)
         axd.tick_params(labelsize=10)
         for lab in axd.get_xticklabels() + axd.get_yticklabels():
-            lab.set_fontname("Georgia")
+            lab.set_fontname(CHART_FONT)
         st.pyplot(figd, use_container_width=True)
+        plt.close(figd)
     with dcol2:
         st.markdown(
             f"""
@@ -582,19 +593,20 @@ with col1:
         if not vals.empty:
             ax1.hist(vals, bins=bins, color=color, edgecolor="white", alpha=0.75, label=lbl)
 
-    ax1.set_title("Medical Cost Distribution", fontsize=13, fontname="Georgia")
-    ax1.set_xlabel("Annual Medical Cost ($)", fontsize=11, fontname="Georgia")
-    ax1.set_ylabel("Number of Members", fontsize=11, fontname="Georgia")
+    ax1.set_title("Medical Cost Distribution", fontsize=13, fontname=CHART_FONT)
+    ax1.set_xlabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
+    ax1.set_ylabel("Number of Members", fontsize=11, fontname=CHART_FONT)
     ax1.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"${x:,.0f}"))
     ax1.tick_params(labelsize=10)
     ax1.legend(fontsize=9, title_fontsize=10)
 
     for label in ax1.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
     for label in ax1.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     st.pyplot(fig1, use_container_width=False)
+    plt.close(fig1)
     chart_caption("Costs are bimodal: a low-cost cluster and a higher second hump made up almost entirely of smokers.")
 
 
@@ -618,14 +630,15 @@ with col2:
         ax=ax2b
     )
 
-    ax2b.set_title("Cost Spread by Smoking Status", fontsize=13, fontname="Georgia")
-    ax2b.set_xlabel("Smoking Status", fontsize=11, fontname="Georgia")
-    ax2b.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname="Georgia")
-    ax2b.set_xticklabels(["Non-Smoker", "Smoker"], fontname="Georgia")
+    ax2b.set_title("Cost Spread by Smoking Status", fontsize=13, fontname=CHART_FONT)
+    ax2b.set_xlabel("Smoking Status", fontsize=11, fontname=CHART_FONT)
+    ax2b.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
+    ax2b.set_xticklabels(["Non-Smoker", "Smoker"], fontname=CHART_FONT)
     ax2b.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
     ax2b.tick_params(labelsize=10)
 
     st.pyplot(fig2b, use_container_width=False)
+    plt.close(fig2b)
     chart_caption("Smokers show both higher and more variable costs.")
 
 # ======================
@@ -650,17 +663,18 @@ with col3:
         ax=ax2
     )
 
-    ax2.set_title("Average Cost: Smoker vs Non-Smoker", fontsize=13, fontname="Georgia")
-    ax2.set_xlabel("Smoking Status", fontsize=11, fontname="Georgia")
-    ax2.set_ylabel("Average Medical Cost ($)", fontsize=11, fontname="Georgia")
+    ax2.set_title("Average Cost: Smoker vs Non-Smoker", fontsize=13, fontname=CHART_FONT)
+    ax2.set_xlabel("Smoking Status", fontsize=11, fontname=CHART_FONT)
+    ax2.set_ylabel("Average Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
-    ax2.set_xticklabels(["Non-Smoker", "Smoker"], fontname="Georgia")
+    ax2.set_xticklabels(["Non-Smoker", "Smoker"], fontname=CHART_FONT)
     ax2.tick_params(labelsize=10)
 
     for label in ax2.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     st.pyplot(fig2, use_container_width=False)
+    plt.close(fig2)
     chart_caption("The smoker/non-smoker gap dwarfs every other factor — it's the portfolio's main cost lever.")
 
 
@@ -683,19 +697,20 @@ with col4:
         ax=ax3
     )
 
-    ax3.set_title("Age vs Annual Medical Cost", fontsize=13, fontname="Georgia")
-    ax3.set_xlabel("Age", fontsize=11, fontname="Georgia")
-    ax3.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname="Georgia")
+    ax3.set_title("Age vs Annual Medical Cost", fontsize=13, fontname=CHART_FONT)
+    ax3.set_xlabel("Age", fontsize=11, fontname=CHART_FONT)
+    ax3.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax3.legend(title="Smoker", fontsize=10, title_fontsize=11)
     ax3.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
     ax3.tick_params(labelsize=10)
 
     for label in ax3.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
     for label in ax3.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     st.pyplot(fig3, use_container_width=False)
+    plt.close(fig3)
     chart_caption("Cost rises gently with age, but splits into three bands — smokers (red) form the two costly upper bands.")
 
 st.markdown("---")
@@ -735,21 +750,21 @@ with col1:
     ax4.set_title(
         "Member Distribution by Risk Score",
         fontsize=13,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
     ax4.set_xlabel(
         "Risk Score",
         fontsize=11,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
     ax4.set_ylabel(
         "Number of Members",
         fontsize=11,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
@@ -757,13 +772,14 @@ with col1:
 
 
     for label in ax4.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     for label in ax4.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
 
     st.pyplot(fig4, use_container_width=False)
+    plt.close(fig4)
     chart_caption("Most members combine zero or one risk factor.")
 
 
@@ -805,21 +821,21 @@ with col2:
     ax5.set_title(
         "Members by Risk Tier",
         fontsize=13,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
     ax5.set_xlabel(
         "Risk Tier",
         fontsize=11,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
     ax5.set_ylabel(
         "Number of Members",
         fontsize=11,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
@@ -827,13 +843,14 @@ with col2:
 
 
     for label in ax5.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     for label in ax5.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
 
     st.pyplot(fig5, use_container_width=False)
+    plt.close(fig5)
     chart_caption("Most members sit in the Low tier; High-risk is a small but disproportionately costly minority.")
 
 
@@ -859,19 +876,20 @@ with col3:
         ax=ax6
     )
 
-    ax6.set_title("Cost Spread by Risk Tier", fontsize=13, fontname="Georgia")
-    ax6.set_xlabel("Risk Tier", fontsize=11, fontname="Georgia")
-    ax6.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname="Georgia")
+    ax6.set_title("Cost Spread by Risk Tier", fontsize=13, fontname=CHART_FONT)
+    ax6.set_xlabel("Risk Tier", fontsize=11, fontname=CHART_FONT)
+    ax6.set_ylabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax6.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
     ax6.tick_params(labelsize=10)
 
     for label in ax6.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     for label in ax6.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     st.pyplot(fig6, use_container_width=False)
+    plt.close(fig6)
     chart_caption("Typical cost climbs sharply by tier; the Low tier is the most spread out, while the small High tier is uniformly expensive.")
 
 st.markdown("---")
@@ -1005,21 +1023,21 @@ with col1:
     ax7.set_title(
         "Cost vs Premium by Risk Tier",
         fontsize=13,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
     ax7.set_xlabel(
         "Risk Tier",
         fontsize=11,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
     ax7.set_ylabel(
         "Medical Cost ($)",
         fontsize=11,
-        fontname="Georgia"
+        fontname=CHART_FONT
     )
 
 
@@ -1032,20 +1050,21 @@ with col1:
 
 
     for label in ax7.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
 
     for label in ax7.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
 
     ax7.legend(
         title="",
-        prop={"family": "Georgia", "size": 10}
+        prop={"family": CHART_FONT, "size": 10}
     )
 
 
     st.pyplot(fig7, use_container_width=False)
+    plt.close(fig7)
     chart_caption("Premium = average cost plus a per-tier markup (higher tiers carry a larger margin).")
 
 
@@ -1070,17 +1089,17 @@ with col2:
         ax=ax8
     )
 
-    ax8.set_title("Total Profit by Risk Tier", fontsize=13, fontname="Georgia")
-    ax8.set_xlabel("Risk Tier", fontsize=11, fontname="Georgia")
-    ax8.set_ylabel("Total Profit ($)", fontsize=11, fontname="Georgia")
+    ax8.set_title("Total Profit by Risk Tier", fontsize=13, fontname=CHART_FONT)
+    ax8.set_xlabel("Risk Tier", fontsize=11, fontname=CHART_FONT)
+    ax8.set_ylabel("Total Profit ($)", fontsize=11, fontname=CHART_FONT)
     ax8.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"${y:,.0f}"))
     ax8.tick_params(labelsize=10)
 
     for label in ax8.get_xticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     for label in ax8.get_yticklabels():
-        label.set_fontname("Georgia")
+        label.set_fontname(CHART_FONT)
 
     # add member count labels above each bar
     # keep only tiers that actually exist after filtering, in canonical order
@@ -1094,10 +1113,11 @@ with col2:
             f'n={int(row["members"])}',
             ha="center",
             fontsize=10,
-            fontname="Georgia"
+            fontname=CHART_FONT
         )
 
     st.pyplot(fig8, use_container_width=False)
+    plt.close(fig8)
     chart_caption("Total profit reflects both margin per member and tier size.")
 
 # Tail-risk caveat: profit above is an *expected* value. The interesting (and

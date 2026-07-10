@@ -3,3 +3,7 @@ pandas>=2.2.0
 numpy>=1.27.0
 matplotlib>=3.9.0
 seaborn>=0.13.2
+# pyarrow 25.0.0 segfaults during Streamlit's dataframe/Arrow conversion on
+# script reruns (crashes the whole app with "Error running app" on Streamlit
+# Cloud). Pin below 25 until a fixed release is out.
+pyarrow<25
