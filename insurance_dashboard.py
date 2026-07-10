@@ -459,7 +459,9 @@ st.markdown("## Portfolio Snapshot")
 # Six headline metrics for the filtered portfolio, shown as blue score cards.
 snapshot_metrics = [
     ("Total Members", f"{len(df):,}"),
-    ("Avg Age", f"{df['age'].mean():.0f}"),
+    # One decimal: whole-year rounding shows "39" for every region/smoker
+    # slice (segment averages differ by <1 year), which reads as a frozen card.
+    ("Avg Age", f"{df['age'].mean():.1f}"),
     ("Avg BMI", f"{df['bmi'].mean():.1f}"),
     ("Median Cost", f"${df['charges'].median():,.0f}"),
     ("Average Cost", f"${df['charges'].mean():,.0f}"),
