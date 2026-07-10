@@ -903,7 +903,7 @@ st.markdown("## Risk-Based Pricing")
 # Higher tiers carry far more cost *variance* (tail risk), so charging them a
 # larger margin than low-risk members reflects real risk loading — unlike a
 # single flat markup applied to every tier.
-with st.expander("⚙️  Pricing assumptions — set the premium markup for each risk tier", expanded=False):
+with st.expander("⚙️  Pricing assumptions — set the premium markup for each risk tier", expanded=True):
     mcol1, mcol2, mcol3 = st.columns(3)
     with mcol1:
         markup_low = st.slider("Low-risk markup (%)", 0, 100, 10, step=5)
