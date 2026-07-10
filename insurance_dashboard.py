@@ -560,7 +560,7 @@ if usable and df["charges"].std() > 0:
     dcol1, dcol2 = st.columns([3, 2], vertical_alignment="center")
     with dcol1:
         chart_header("What drives cost the most? (standardized effect size)")
-        figd, axd = plt.subplots(figsize=(6, 2.6))
+        figd, axd = plt.subplots(figsize=(10, 4.3))
         axd.barh(importance["driver"], importance["weight"], color=COLOR_PRIMARY, edgecolor="white")
         axd.set_xlabel("Relative importance  ( |standardized coefficient| )", fontsize=11, fontname=CHART_FONT)
         axd.tick_params(labelsize=10)
@@ -992,7 +992,7 @@ with col1:
     chart_header("Cost vs Premium by Risk Tier")
 
 
-    fig7, ax7 = plt.subplots(figsize=(5, 3))
+    fig7, ax7 = plt.subplots(figsize=(9, 5.4))
 
 
     pricing_melted = pricing.melt(
@@ -1058,7 +1058,7 @@ with col1:
     )
 
 
-    st.pyplot(fig7, width="content")
+    st.pyplot(fig7, width="stretch")
     plt.close(fig7)
     chart_caption("Premium = average cost plus a per-tier markup (higher tiers carry a larger margin).")
 
@@ -1070,7 +1070,7 @@ with col1:
 with col2:
     chart_header("Total Profit by Risk Tier")
 
-    fig8, ax8 = plt.subplots(figsize=(5, 3))
+    fig8, ax8 = plt.subplots(figsize=(9, 5.4))
 
     bars = sns.barplot(
         data=pricing,
@@ -1114,7 +1114,7 @@ with col2:
             fontname=CHART_FONT
         )
 
-    st.pyplot(fig8, width="content")
+    st.pyplot(fig8, width="stretch")
     plt.close(fig8)
     chart_caption("Total profit reflects both margin per member and tier size.")
 
