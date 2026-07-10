@@ -598,7 +598,11 @@ with col1:
     ax1.set_title("Medical Cost Distribution", fontsize=13, fontname=CHART_FONT)
     ax1.set_xlabel("Annual Medical Cost ($)", fontsize=11, fontname=CHART_FONT)
     ax1.set_ylabel("Number of Members", fontsize=11, fontname=CHART_FONT)
-    ax1.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+    # Compact $k labels — full amounts ($10,000, $20,000, …) are wider than
+    # the tick spacing in this small chart and collide into one another.
+    ax1.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda x, _: "$0" if x == 0 else f"${x / 1000:,.0f}k")
+    )
     ax1.tick_params(labelsize=10)
     ax1.legend(fontsize=9, title_fontsize=10)
 
