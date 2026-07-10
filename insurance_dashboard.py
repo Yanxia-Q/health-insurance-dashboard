@@ -1107,6 +1107,10 @@ with col2:
     for label in ax8.get_yticklabels():
         label.set_fontname(CHART_FONT)
 
+    # Headroom above the tallest bar so its n= label isn't clipped by the
+    # top of the chart.
+    ax8.set_ylim(0, pricing["total_profit"].max() * 1.15)
+
     # add member count labels above each bar
     # keep only tiers that actually exist after filtering, in canonical order
     tier_order = [t for t in RISK_ORDER if t in set(pricing["risk_tier"])]
