@@ -1151,7 +1151,7 @@ if "yes" in smoker_effect.index and "no" in smoker_effect.index and smoker_effec
     smoker_ratio = smoker_effect["yes"] / smoker_effect["no"]
     st.write(
         f"Smokers cost on average **{smoker_ratio:.1f}× more** than non-smokers "
-        f"(**${smoker_effect['yes']:,.0f}** vs **${smoker_effect['no']:,.0f}** per year)."
+        f"(**\\${smoker_effect['yes']:,.0f}** vs **\\${smoker_effect['no']:,.0f}** per year)."
     )
 else:
     st.write(
@@ -1169,7 +1169,7 @@ st.markdown("### Risk segmentation is strongly predictive")
 # Show the actual tier averages and the Low → High spread instead of a vague claim.
 present_tiers = [t for t in RISK_ORDER if t in tier_effect.index]
 if len(present_tiers) >= 2:
-    parts = " → ".join(f"{t} **${tier_effect[t]:,.0f}**" for t in present_tiers)
+    parts = " → ".join(f"{t} **\\${tier_effect[t]:,.0f}**" for t in present_tiers)
     spread = tier_effect[present_tiers[-1]] / tier_effect[present_tiers[0]]
     st.write(
         f"Average annual cost by tier: {parts} — a **{spread:.1f}× spread** "
@@ -1200,7 +1200,7 @@ st.markdown("### Business Recommendations")
 
 # Data-driven lead line tied to the current filters + markup assumptions.
 total_profit = pricing["total_profit"].sum()
-lead = f"At the current markup assumptions, the portfolio yields **${total_profit:,.0f}** in modelled profit"
+lead = f"At the current markup assumptions, the portfolio yields **\\${total_profit:,.0f}** in modelled profit"
 if "High" in set(pricing["risk_tier"]):
     high_row = pricing.loc[pricing["risk_tier"] == "High"].iloc[0]
     high_share_profit = high_row["total_profit"] / total_profit if total_profit else 0
