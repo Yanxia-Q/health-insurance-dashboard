@@ -126,6 +126,45 @@ def metric_card(label, value, color="#2E3EED"):
 # CONFIG
 # ======================
 st.set_page_config(page_title="Insurance Dashboard", layout="wide")
+
+# ======================
+# VISITOR ANALYTICS (GoatCounter)
+# ======================
+GOATCOUNTER_URL = "https://monicaqiao-insurance.goatcounter.com/count"
+
+def track(page: str):
+    """Send one anonymous pageview per session to GoatCounter.
+
+    Self-exclusion: open the app once with ?skipgc=1 to stop counting your own
+    visits in that browser (stored in localStorage); ?skipgc=0 re-enables it.
+    """
+    session_key = f"_gc_counted_{page}"
+    if st.session_state.get(session_key):
+        return  # already counted this session (avoids re-counting on widget interactions)
+    st.session_state[session_key] = True
+
+    skip_param = st.query_params.get("skipgc", "")
+    st.components.v1.html(f"""
+        <script>
+            var skip = "{skip_param}";
+            try {{
+                if (skip === "1") localStorage.setItem("skipgc", "t");
+                if (skip === "0") localStorage.removeItem("skipgc");
+                if (localStorage.getItem("skipgc") === "t") skip = "1";
+            }} catch (e) {{}}
+            if (skip !== "1") {{
+                // allow_frame: Streamlit renders this inside an iframe, which count.js skips by default
+                window.goatcounter = {{ path: "{page}", allow_frame: true }};
+                var s = document.createElement("script");
+                s.async = true;
+                s.src = "https://gc.zgo.at/count.js";
+                s.setAttribute("data-goatcounter", "{GOATCOUNTER_URL}");
+                document.head.appendChild(s);
+            }}
+        </script>
+    """, height=0)
+
+track("/dashboard")
 # ======================
 # GLOBAL PAGE STYLE
 # ======================
