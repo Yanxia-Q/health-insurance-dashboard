@@ -2,11 +2,12 @@
 
 An interactive Streamlit dashboard that analyzes health insurance data to uncover cost drivers, segment risk, and explore dynamic pricing strategies.
 
-**[🔗 View Live Dashboard](https://share.streamlit.io)** | **[📊 GitHub Repository](https://github.com/YOUR_USERNAME/health-insurance-dashboard)**
+**[🔗 View Live Dashboard](https://monicaqiao-health-insurance-dashboard.streamlit.app/)** | **[📊 GitHub Repository](https://github.com/Yanxia-Q/health-insurance-dashboard)**
 
 ## Overview
 
-This project takes a dataset of 1,338 insurance records and transforms it into an interactive analytics platform. It demonstrates how data-driven segmentation and risk scoring can inform pricing decisions in the insurance industry.
+This project takes a dataset of 1,338 insurance records and transforms it into an interactive analytics platform.
+It demonstrates how data-driven segmentation and risk scoring can inform pricing decisions in the insurance industry.
 
 ## Key Insights
 

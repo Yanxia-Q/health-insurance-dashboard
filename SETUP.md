@@ -10,7 +10,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/health-insurance-dashboard.git
+git clone https://github.com/Yanxia-Q/health-insurance-dashboard.git
 cd health-insurance-dashboard
 
 # Create virtual environment (optional but recommended)
@@ -42,7 +42,7 @@ The dashboard will open at `http://localhost:8501`
    git init
    git add .
    git commit -m "Initial commit: health insurance analytics dashboard"
-   git remote add origin https://github.com/YOUR_USERNAME/health-insurance-dashboard
+   git remote add origin https://github.com/Yanxia-Q/health-insurance-dashboard
    git push -u origin main
    ```
 
@@ -53,49 +53,9 @@ The dashboard will open at `http://localhost:8501`
    - Select your repository, branch (`main`), and main file (`insurance_dashboard.py`)
    - Click "Deploy"
 
-3. **Share your live dashboard**
-   - Your URL will be: `https://YOUR_USERNAME-health-insurance.streamlit.app`
-   - Add this to your CV and portfolio
-
-## Deploy with Docker
-
-### Dockerfile
-
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 8501
-CMD ["streamlit", "run", "insurance_dashboard.py"]
-```
-
-### Build and Run Locally
-
-```bash
-docker build -t health-insurance-dashboard .
-docker run -p 8501:8501 health-insurance-dashboard
-```
-
-### Deploy to Cloud Platforms
-
-Once built, you can deploy the Docker image to:
-- **AWS ECS** or **Elastic Beanstalk**
-- **Google Cloud Run**
-- **Azure Container Instances**
-- **DigitalOcean**
-- **Heroku** (using container registry)
-
 ## Project Dependencies
 
-```
-streamlit==1.35.0        # Interactive web framework
-pandas==2.1.4            # Data manipulation
-numpy==1.26.3            # Numerical computing & regression
-matplotlib==3.8.2        # Data visualization
-seaborn==0.13.1          # Statistical visualization
-```
+See [requirements.txt](requirements.txt) for the full list of packages and pinned versions.
 
 ## Troubleshooting
 
@@ -124,7 +84,7 @@ Ensure `insurance.csv` is in the same directory as `insurance_dashboard.py`
 
 Quick-start command for running locally:
 ```bash
-git clone https://github.com/YOUR_USERNAME/health-insurance-dashboard.git && \
+git clone https://github.com/Yanxia-Q/health-insurance-dashboard.git && \
 cd health-insurance-dashboard && \
 pip install -r requirements.txt && \
 streamlit run insurance_dashboard.py
