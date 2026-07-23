@@ -2,7 +2,7 @@
 
 An interactive Streamlit dashboard that analyzes health insurance data to uncover cost drivers, segment risk, and explore dynamic pricing strategies.
 
-**[🔗 View Live Dashboard](https://monicaqiao-health-insurance-dashboard.streamlit.app/)** | **[📊 GitHub Repository](https://github.com/Yanxia-Q/health-insurance-dashboard)**
+**[🔗 View Live Dashboard](https://monicaqiao-health-insurance-dashboard.streamlit.app/)**
 
 ## Overview
 
