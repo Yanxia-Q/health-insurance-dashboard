@@ -42,3 +42,4 @@ wheels/
 # Environment
 .env
 .env.local
+PRESENTATION_GUIDE.md
